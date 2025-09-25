@@ -1,0 +1,22 @@
+#include<iostream>
+using namespace std;
+int main(){
+	int cake=54;
+	int cofee=23;
+	int apple=33;
+	int *pointer=&cake;
+	int *p2=&cofee; 
+	int *p3=&apple;
+	int qunity;
+	cin>>qunity;
+	cout<<"total price of cake "<<qunity*(*pointer)<<endl;
+	int qunity1;
+	cin>>qunity1;
+	cout<<"total price of apple "<<qunity1*(*p2)<<endl;
+	int qunity2;
+	cin>>qunity2;
+	cout<<"total price of apple "<<qunity2*(*p3)<<endl;
+	cout<<"total bill";
+	int total price=<qunity*(*pointer)+qunity1*(*p2)+qunity2*(*p3)<<endl;
+	cout<<total price<<endl;
+}
