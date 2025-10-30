@@ -1,0 +1,102 @@
+Topic: Hospital Management using Doubly Linked List
+By: Hammad Hussain
+class:bs ai artifical intellgence 
+
+Purpose:
+To manage patients in a hospital system  adding, deleting, and displaying patients efficiently.
+
+
+In a hospital there is a need to store and manage patient records 
+Each patient has a unique patient ID, and the hospital must be able to
+
+Add a new patient at the beginning.
+
+Add a new patient at the end.
+
+Add a new patient at a specific position.
+
+Delete a patient from the beginning, end, or a specific position.
+
+Display the list of all patient IDs in order.
+
+A doubly linked list is used to handle these operations easily, as each node can connect both to the next and previous patients.
+
+
+We will use a classbased approach with two classes:
+
+patient :one patient a node
+
+hospital :manages all patient nodes
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Concept:
+
+A Doubly Linked List connects patients in both directions:
+
+patient class:
+it has following members
+
+patient_id
+
+pointer to next patient
+
+pointer to previous patient
+--------------------------------
+
+
+int patient_id;
+patient* next;
+patient* prev;
+
+
+---------------------------------
+
+This allows movement forward and backward in the list.
+
+Class hospital:
+
+Manages all patients.
+
+Has a pointer head to the first patient.
+
+we can use hospital class do to many thing like
+
+ Insertion Functions
+
+adding()
+Adds a new patient at the start of the list.
+
+addingAtEnd()
+Adds a new patient at the end.
+
+addingAposition()
+Inserts a new patient at a specific position between patients
+
+
+
+
+
+ Deletion Functions
+
+deletetbeg() removes the first patient.
+
+
+
+
