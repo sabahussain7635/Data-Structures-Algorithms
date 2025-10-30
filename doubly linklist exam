@@ -1,0 +1,102 @@
+#include<iostream>
+using namespace std;
+
+class patient {
+        public:
+        int patient_id;
+        patient* next;
+        patient* prev;
+
+        patient(int value){
+                patient_id = value;
+                next = nullptr;
+                prev = nullptr;
+        }
+};
+
+class hospital {
+        public:
+                patient* head = nullptr;
+
+                void adding(int value){
+                        patient* newpatient = new patient(value);
+
+                        if (head ==  nullptr){
+                                head = newpatient;
+                                return;
+                        }
+                        newpatient->next = head;
+                        head->prev = newpatient;
+                        head = newpatient;
+                }
+                void addingAtEnd(int value){
+                        if(head == nullptr){
+                                adding(value);
+                                return;
+                        }
+                        patient* newpatient = new patient(value);
+                        patient* temp = head;
+                        while(temp->next!=nullptr){
+                                temp = temp->next;
+                        }
+                        temp->next = newpatient;
+                        newpatient->prev = temp;
+                }
+                void addingAposition(int value , int pos){
+                        patient* newpatient = new patient(value);
+                        patient* temp = head;
+                        int count = 1;
+                        while(count < pos-1){
+                                temp = temp->next;
+                                count++;
+                        }
+                        if (temp == nullptr || temp->next == nullptr) {
+                                addingAtEnd(value);
+                                return;
+                        }
+                        patient* store = temp->next;
+                        temp->next = newpatient;
+                        newpatient->prev = temp;
+                        newpatient->next = store;
+                        store->prev = newpatient;
+                        }
+
+                        void deletetbeg(){
+                                if(head == nullptr){
+                                        return;
+                                }
+                                else{
+                                        patient* temp = head;
+                                        head = head->next;
+                                        delete temp;
+                                }
+                        }
+                    
+                    
+                      
+                        void display(){
+    patient* temp = head;
+    while(temp != nullptr){
+        cout << "The patient ID is " << temp->patient_id << endl;
+        temp = temp->next;
+    }
+}
+        };
+int main(){
+        hospital l1;
+        l1.adding(10);
+        l1.adding(20);
+        l1.addingAtEnd(30);
+        
+        l1.display();
+        cout<<"after the discharge of first patient the list wll look like"<<endl;
+        
+     l1.deletetbeg();
+     l1.display();
+     l1.adding(43);
+     l1.adding(22);
+     
+
+
+        return 0;
+}
