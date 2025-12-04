@@ -1,0 +1,109 @@
+#include <iostream>
+#include <string>
+#include <sstream>
+using namespace std;
+
+struct TimeCapsule {
+    int year;
+    string eventName;
+    TimeCapsule* left;
+    TimeCapsule* right;
+
+    TimeCapsule(int y, string e)
+        : year(y), eventName(e), left(nullptr), right(nullptr) {}
+};
+
+class TimeLineBST {
+private:
+
+    // INSERT
+    TimeCapsule* insert(TimeCapsule* root, int year, string name, bool &inserted) {
+        if (!root) {
+            inserted = true;
+            return new TimeCapsule(year, name);
+        }
+
+        if (year < root->year) {
+            root->left = insert(root->left, year, name, inserted);
+        } else if (year > root->year) {
+            root->right = insert(root->right, year, name, inserted);
+        } else {
+            inserted = false; // duplicate
+        }
+        return root;
+    }
+
+    // MIN VALUE NODE (for deletion)
+    TimeCapsule* findMin(TimeCapsule* root) {
+        while (root && root->left)
+            root = root->left;
+        return root;
+    }
+
+    // DELETE
+    TimeCapsule* remove(TimeCapsule* root, int year, bool &deleted) {
+        if (!root) return nullptr;
+
+        if (year < root->year) {
+            root->left = remove(root->left, year, deleted);
+        }
+        else if (year > root->year) {
+            root->right = remove(root->right, year, deleted);
+        }
+        else {
+            deleted = true;  // Found the node
+
+            // Case 1: No children
+            if (!root->left && !root->right) {
+                delete root;
+                return nullptr;
+            }
+
+            // Case 2: One child
+            if (!root->left) {
+                TimeCapsule* temp = root->right;
+                delete root;
+                return temp;
+            }
+            if (!root->right) {
+                TimeCapsule* temp = root->left;
+                delete root;
+                return temp;
+            }
+
+            // Case 3: Two children
+            TimeCapsule* successor = findMin(root->right);
+            root->year = successor->year;
+            root->eventName = successor->eventName;
+
+            root->right = remove(root->right, successor->year, deleted);
+        }
+        return root;
+    }
+
+    // SEARCH
+    TimeCapsule* search(TimeCapsule* root, int year) {
+        if (!root) return nullptr;
+        if (year == root->year) return root;
+        if (year < root->year) return search(root->left, year);
+        return search(root->right, year);
+    }
+
+    // IN-ORDER TRAVERSAL (REPORT)
+    void inOrder(TimeCapsule* root) {
+        if (!root) return;
+        inOrder(root->left);
+        cout << root->year << ": " << root->eventName << endl;
+        inOrder(root->right);
+    }
+
+public:
+    TimeCapsule* root = nullptr;
+
+    // Public wrapper functions
+    void inject(int year, string name) {
+        bool inserted = false;
+        root = insert(root, year, name, inserted);
+        cout << "> System: Injecting " << year << "... ";
+        if (inserted) cout << "Timeline stable." << endl;
+        else cout << "Year already exists. Injection aborted." << endl
